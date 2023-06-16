@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Number Combinations</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      html {
+        font-size: 62.5%;
+        font-family: "Roboto", sans-serif;
+      }
+      body {
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+        gap: 2rem;
+        min-height: 100vh;
+        background-color: #a6a6e7;
+        font-size: 1.6rem;
+      }
+      label {
+        padding: 1.5rem;
+        color: blue;
+        font-size: 2rem;
+        font-weight: bold;
+      }
+      input {
+        margin-top: 5rem;
+        width: 20rem;
+        padding: 2rem;
+        border-radius: 2rem;
+        outline: 0.5rem solid transparent;
+        box-shadow: 0 0 1rem rgb(47, 0, 255);
+        border: 0.2rem solid rgb(55, 0, 255);
+      }
+      button {
+        margin-top: 5rem;
+        padding: 2rem;
+        border-radius: 2rem;
+        transition: all 0.3s;
+        cursor: pointer;
+        outline: none;
+        box-shadow: 0 0 1rem rgb(47, 0, 255);
+        border: 0.2rem solid rgb(0, 26, 255);
+        font-weight: bold;
+      }
+      button:hover,
+      button:active {
+        opacity: 0.3;
+      }
+      div {
+        font-size: 2rem;
+        margin-top: 4rem;
+        font-weight: bold;
+        margin-left: 2rem;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- <label for="numbers">Enter numbers:</label> -->
+    <input
+      type="text"
+      id="numbers"
+      placeholder="Enter comma-separated numbers"
+      autofocus
+    />
+    <button onclick="generateCombinations()">Generate Combinations</button>
+
+    <div id="combinations"></div>
+    <!-- New div to display the combinations -->
+
+    <script src="script.js"></script>
+    <script>
+      function generateCombinations() {
+        const numbersInput = document.getElementById("numbers");
+        const numbers = numbersInput.value
+          .split(",")
+          .map((num) => parseInt(num.trim()));
+
+        const combinations = generateCombinationsArray(numbers);
+
+        displayCombinations(combinations);
+      }
+
+      function generateCombinationsArray(arr) {
+        const result = [];
+
+        function permute(arr, start = 0) {
+          if (start === arr.length - 1) {
+            result.push([...arr]);
+            return;
+          }
+
+          for (let i = start; i < arr.length; i++) {
+            [arr[start], arr[i]] = [arr[i], arr[start]];
+            permute(arr, start + 1);
+            [arr[start], arr[i]] = [arr[i], arr[start]]; // backtrack
+          }
+        }
+
+        permute(arr);
+        return result;
+      }
+
+      function displayCombinations(combinations) {
+        const combinationsDiv = document.getElementById("combinations");
+
+        // Clear previous results
+        combinationsDiv.innerHTML = "";
+
+        // Display each combination
+        combinations.forEach((combination) => {
+          const combinationText = document.createElement("p");
+          combinationText.textContent = combination.join(" ");
+          combinationsDiv.appendChild(combinationText);
+        });
+      }
+    </script>
+  </body>
+</html>
