@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Number Combinations</title>
+    <title>Combinations Generator</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -73,27 +73,25 @@
     </style>
   </head>
   <body>
-    <!-- <label for="numbers">Enter numbers:</label> -->
     <input
       type="text"
-      id="numbers"
-      placeholder="Enter comma-separated numbers"
+      id="input"
+      placeholder="Enter comma-separated words or numbers"
       autofocus
     />
     <button onclick="generateCombinations()">Generate Combinations</button>
 
     <div id="combinations"></div>
-    <!-- New div to display the combinations -->
 
     <script src="script.js"></script>
     <script>
       function generateCombinations() {
-        const numbersInput = document.getElementById("numbers");
-        const numbers = numbersInput.value
+        const inputElement = document.getElementById("input");
+        const inputValues = inputElement.value
           .split(",")
-          .map((num) => parseInt(num.trim()));
+          .map((value) => value.trim());
 
-        const combinations = generateCombinationsArray(numbers);
+        const combinations = generateCombinationsArray(inputValues);
 
         displayCombinations(combinations);
       }
@@ -121,10 +119,8 @@
       function displayCombinations(combinations) {
         const combinationsDiv = document.getElementById("combinations");
 
-        // Clear previous results
         combinationsDiv.innerHTML = "";
 
-        // Display each combination
         combinations.forEach((combination) => {
           const combinationText = document.createElement("p");
           combinationText.textContent = combination.join(" ");
